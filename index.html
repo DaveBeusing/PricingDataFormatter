@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="content">
-		<h1 style="text-align: center;">Pricing Data Formatter</h1>
+		<h1>Pricing Data Formatter</h1>
 		<div class="ThemeToggleWrapper">
 			<input type="checkbox" class="ThemeToggleManager" id="ThemeToggleManager"/>
 			<label for="ThemeToggleManager" class="ThemeToggle">
@@ -26,7 +26,7 @@
 				<span class="Star Star6"></span>
 			</label>
 		</div>
-		<div class="textarea-container">
+		<div class="TextareaWrapper">
 			<div>
 				<label for="inputData">Input (Rohdaten via Beleg ⇒ X ⇒ 4 ⇒ F5 ⇒ Text):</label>
 				<textarea id="inputData"></textarea>
@@ -36,8 +36,8 @@
 				<textarea id="outputData" readonly onclick="this.select()"></textarea>
 			</div>
 		</div>
-		<div id="errorOutput" class="error"></div>
-		<div class="switch-container">
+		<div class="ErrorWrapper" id="errorOutput"></div>
+		<div class="SwitchWrapper">
 			<label class="switch-label">
 				<div class="switch">
 					<input type="checkbox" class="sliderbox" id="showSKU">
@@ -60,7 +60,7 @@
 				Price
 			</label>
 		</div>
-		<div class="button-row">
+		<div class="ButtonWrapper">
 			<button class="btn" id="buttonExport">Export CSV</button>
 			<button class="btn" id="buttonClear">Clear</button>
 		</div>

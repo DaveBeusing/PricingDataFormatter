@@ -31,30 +31,33 @@ body {
 }
 
 .content {
-	max-width: 1200px;
+	max-width: 600px;
 	width: 100%;
+	padding: 5px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.TextareaWrapper {
+	padding: 2px;
+}
+
+.TextareaWrapper > div {
+	width: 100%;
+	margin-top: 20px;
 }
 
 textarea {
-	width: 100%;
-	height: 150px;
+	width: 96%;
+	height: 200px;
 	background-color: var(--textarea);
 	color: var(--text);
 	border: 1px solid var(--border);
 	padding: 0.5rem;
 	border-radius: 4px;
 	resize: vertical;
-}
-
-.textarea-container {
-	display: flex;
-	gap: 1rem;
-	justify-content: center;
-}
-
-.textarea-container > div {
-	max-width: 600px;
-	width: 100%;
 }
 
 table {
@@ -72,7 +75,7 @@ th, td {
 	text-align: left;
 }
 
-.switch-container {
+.SwitchWrapper {
 	display: flex;
 	gap: 2rem;
 	margin: 1rem 0;
@@ -132,13 +135,13 @@ th, td {
 	align-items: center;
 }
 
-.error {
+.ErrorWrapper {
 	color: var(--error);
 	margin-top: 0.5rem;
 	text-align: center;
 }
 
-.button-row {
+.ButtonWrapper {
 	display: flex;
 	gap: 1rem;
 	margin-top: 1rem;
