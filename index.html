@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Pricing Data Formatter</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/PricingDataFormatter.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/ThemeManager.css">
+</head>
+<body>
+	<div class="content">
+		<h1 style="text-align: center;">Pricing Data Formatter</h1>
+		<div class="ThemeToggleWrapper">
+			<input type="checkbox" class="ThemeToggleManager" id="ThemeToggleManager"/>
+			<label for="ThemeToggleManager" class="ThemeToggle">
+				<span class="ThemeToggleHandler">
+					<span class="Crater Crater1"></span>
+					<span class="Crater Crater2"></span>
+					<span class="Crater Crater3"></span>
+				</span>
+				<span class="Star Star1"></span>
+				<span class="Star Star2"></span>
+				<span class="Star Star3"></span>
+				<span class="Star Star4"></span>
+				<span class="Star Star5"></span>
+				<span class="Star Star6"></span>
+			</label>
+		</div>
+		<div class="textarea-container">
+			<div>
+				<label for="inputData">Eingabe (Rohdaten via Beleg ⇒ X ⇒ 4 ⇒ F5 ⇒ Text):</label>
+				<textarea id="inputData"></textarea>
+			</div>
+			<div>
+				<label for="outputData">Ausgabe (formatiert):</label>
+				<textarea id="outputData" readonly onclick="this.select()"></textarea>
+			</div>
+		</div>
+		<div id="errorOutput" class="error"></div>
+		<div class="switch-container">
+			<label class="switch-label">
+				<div class="switch">
+					<input type="checkbox" class="sliderbox" id="showSKU">
+					<span class="slider"></span>
+				</div>
+				SKU
+			</label>
+			<label class="switch-label">
+				<div class="switch">
+					<input type="checkbox" class="sliderbox" id="showQTY">
+					<span class="slider"></span>
+				</div>
+				QTY
+			</label>
+			<label class="switch-label">
+				<div class="switch">
+					<input type="checkbox" class="sliderbox" id="showPrice" checked>
+					<span class="slider"></span>
+				</div>
+				Price
+			</label>
+		</div>
+		<div class="button-row">
+			<button class="btn" id="buttonExport">Export als CSV</button>
+			<button class="btn" id="buttonClear">Zurücksetzen</button>
+		</div>
+		<table id="resultTable">
+			<thead>
+				<tr id="tableHeader"></tr>
+			</thead>
+			<tbody id="tableBody"></tbody>
+		</table>
+	</div>
+	<script src="assets/js/ThemeManager.js"></script>
+	<script src="assets/js/PricingDataFormatter.js"></script>
+	<script>
+		new ThemeManager().init();
+		new PricingDataFormatter().init();
+	</script>
+</body>
+</html>
