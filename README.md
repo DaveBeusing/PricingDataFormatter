@@ -1,4 +1,4 @@
-# 💶 Pricing Data Formatter Demo
+# 💶 Pricing Data Formatter
 
 Ein interaktives Tool zum Umwandeln von unstrukturierten Produkt-/Preisdaten in saubere CSV-Tabellen.
 
