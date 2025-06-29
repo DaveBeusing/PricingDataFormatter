@@ -15,6 +15,13 @@ Ein interaktives Tool zum Umwandeln von unstrukturierten Produkt-/Preisdaten in 
 - 💡 Beispiel-Daten vorbefüllt zur schnellen Demo
 - 🎨 Schlichtes modernes UI mit responsivem Layout
 
+## 🧪 Beispieldaten
+```text
+166566 Hub 10-Port IcyBox USB 3.0 IB-AC6110 mit 11 47.96 527.56
+123456 Docking Station USB-C Dual HDMI 5 89.99 449.95
+```
+
+
 ---
 
 ## 🚀 Demo starten
