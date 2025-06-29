@@ -25,6 +25,7 @@ Ein interaktives Tool zum Umwandeln von unstrukturierten Produkt-/Preisdaten in 
 git clone https://github.com/DaveBeusing/PricingDataFormatter.git
 cd pricing-data-formatter
 open index.html
+```
 
 ---
 ## 📄 Lizenz
