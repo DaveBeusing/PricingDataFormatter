@@ -30,6 +30,7 @@ class PricingDataFormatter {
 			showSKU : this.$( 'showSKU' ),
 			showQTY : this.$( 'showQTY' ),
 			showPrice : this.$( 'showPrice' ),
+			showPlaceholder : this.$( 'showPlaceholder' ),
 			buttonExport : this.$( 'buttonExport' ),
 			buttonClear : this.$( 'buttonClear' ),
 			tableHeader : this.$( 'tableHeader' ),
@@ -41,9 +42,9 @@ class PricingDataFormatter {
 		return document.getElementById( element );
 	}
 	init(){
-		this.html.inputData.addEventListener( 'input', function( event ){
+		this.html.inputData.addEventListener( 'input', (event) => {
 			this.process();
-		}.bind( this ), false );
+		});
 		this.html.showSKU.addEventListener( 'change', function( event ){
 			this.process();
 		}.bind( this ), false );
@@ -51,6 +52,9 @@ class PricingDataFormatter {
 			this.process();
 		}.bind( this ), false );
 		this.html.showPrice.addEventListener( 'change', function( event ){
+			this.process();
+		}.bind( this ), false );
+		this.html.showPlaceholder.addEventListener( 'change', function( event ){
 			this.process();
 		}.bind( this ), false );
 		this.html.buttonExport.addEventListener( 'click', function( event ){
@@ -65,6 +69,7 @@ class PricingDataFormatter {
 		const isSKU = this.html.showSKU.checked;
 		const isQTY = this.html.showQTY.checked;
 		const isPrice = this.html.showPrice.checked;
+		const isPlaceholder = this.html.showPlaceholder.checked;
 		const { data: result, error } = this.format( rawData, isQTY, isSKU, isPrice );
 		const errorOutput = this.html.errorOutput;
 		const outputData = this.html.outputData;
@@ -83,15 +88,26 @@ class PricingDataFormatter {
 		if( isPrice ) header.innerHTML += '<th>Price</th>';
 		const lines = [];
 		result.forEach( row => {
+			if( !isPlaceholder ){
+				if( row.isPlaceholder ) return;
+			}
 			let tr = '<tr>';
-			lines.push( row.join( ";" ) );
-			row.forEach( cell => {
+			lines.push( row.values.join( ";" ) );
+			row.values.forEach( cell => {
 				tr += `<td>${cell}</td>`;
 			});
 			tr += '</tr>';
 			body.innerHTML += tr;
 		});
-		outputData.value = lines.join( "\n" );
+		if( !isPlaceholder ){
+			outputData.value = lines.join( "\n" );
+		}
+		else {
+			outputData.value = result
+				.filter( row => row.isPlaceholder || row.values.some( v => v !== "0" ) )
+				.map( row => row.values.join( ";" ) )
+				.join( "\n" );
+		}
 	}
 	format( rawData, isQTY, isSKU, isPrice ){
 		rawData = rawData.trim().replace( /&#10;/g, "\n" );
@@ -100,10 +116,18 @@ class PricingDataFormatter {
 		let error = null;
 		for( let i = 0; i < rawArray.length; i++ ){
 			let raw = rawArray[i].trim();
-			if( raw === "" ) continue;
+			if( raw === "" ){
+				const tmp = [];
+				if( isSKU ) tmp.push( "0" );
+				if( isQTY ) tmp.push( "0" );
+				if( isPrice ) tmp.push( "0" );
+				data.push( { values: tmp, isPlaceholder: true } );
+				continue;
+			}
+
 			let parts = raw.split( /\s+/ );
 			if( parts.length < 3 ){
-				error = `Fehler in Zeile ${i + 1}: Zu wenige Werte.`;
+				error = `Error in row ${i + 1}: too less values.`;
 				break;
 			}
 			parts.pop();
@@ -111,14 +135,14 @@ class PricingDataFormatter {
 			let qty = parts[parts.length - 2]?.replace( '.', ',' ) || "0";
 			let price = parts[parts.length - 1]?.replace( '.', ',' ) || "0";
 			if( isNaN( qty.replace( ',', '.' ) ) || isNaN( price.replace( ',', '.' ) ) ){
-				error = `Fehlerhafte Zahlen in Zeile ${i + 1}`;
+				error = `Incorrect numbers in line ${i + 1}`;
 				break;
 			}
 			const tmp = [];
 			if( isSKU ) tmp.push( sku );
 			if( isQTY ) tmp.push( qty );
 			if( isPrice ) tmp.push( price );
-			data.push( tmp );
+			data.push( { values: tmp, isPlaceholder: false } );
 		}
 		//if (data.length > 0) data.pop();
 		return { data, error };
@@ -126,10 +150,13 @@ class PricingDataFormatter {
 	clear(){
 		this.html.inputData.value = '';
 		this.html.outputData.value = '';
-		this.html.errorOutput = '';
+		this.html.errorOutput.textContent = '';
+		this.html.tableHeader.innerHTML = '';
+		this.html.tableBody.innerHTML = '';
 		this.html.showSKU.checked = false;
 		this.html.showQTY.checked = false;
 		this.html.showPrice.checked = true;
+		this.html.showPlaceholder.checked = true;
 	}
 	exportCSV(){
 		const data = this.html.outputData.value;
