@@ -171,6 +171,8 @@ class PricingDataFormatter {
 		this.html.showPlaceholder.checked = true;
 	}
 	exportCSV(){
+		//doppelcklick sperren
+		this.html.buttonExport.disabled = true;
 		const data = this.html.outputData.value;
 		const blob = new Blob( [data], { type: 'text/csv;charset=utf-8;' } );
 		const url = URL.createObjectURL( blob );
@@ -185,5 +187,8 @@ class PricingDataFormatter {
 		document.body.appendChild( link );
 		link.click();
 		document.body.removeChild( link );
+		setTimeout(() => {
+			this.html.buttonExport.disabled = false;
+		}, 1000 );
 	}
 }
