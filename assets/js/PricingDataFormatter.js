@@ -31,8 +31,10 @@ class PricingDataFormatter {
 			showQTY : this.$( 'showQTY' ),
 			showPrice : this.$( 'showPrice' ),
 			showPlaceholder : this.$( 'showPlaceholder' ),
+			showTable : this.$( 'showTable' ),
 			buttonExport : this.$( 'buttonExport' ),
 			buttonClear : this.$( 'buttonClear' ),
+			resultTable : this.$( 'resultTable' ),
 			tableHeader : this.$( 'tableHeader' ),
 			tableBody : this.$( 'tableBody' )
 		};
@@ -45,24 +47,27 @@ class PricingDataFormatter {
 		this.html.inputData.addEventListener( 'input', (event) => {
 			this.process();
 		});
-		this.html.showSKU.addEventListener( 'change', function( event ){
+		this.html.showTable.addEventListener( 'change', (event) => {
 			this.process();
-		}.bind( this ), false );
-		this.html.showQTY.addEventListener( 'change', function( event ){
+		});
+		this.html.showSKU.addEventListener( 'change', (event) => {
 			this.process();
-		}.bind( this ), false );
-		this.html.showPrice.addEventListener( 'change', function( event ){
+		});
+		this.html.showQTY.addEventListener( 'change', (event) => {
 			this.process();
-		}.bind( this ), false );
-		this.html.showPlaceholder.addEventListener( 'change', function( event ){
+		});
+		this.html.showPrice.addEventListener( 'change', (event) => {
 			this.process();
-		}.bind( this ), false );
-		this.html.buttonExport.addEventListener( 'click', function( event ){
+		});
+		this.html.showPlaceholder.addEventListener( 'change', (event) => {
+			this.process();
+		});
+		this.html.buttonExport.addEventListener( 'click', (event) => {
 			this.exportCSV();
-		}.bind( this ), false );
-		this.html.buttonClear.addEventListener( 'click', function( event ){
+		});
+		this.html.buttonClear.addEventListener( 'click', (event) => {
 			this.clear();
-		}.bind( this ), false );
+		});
 	}
 	process(){
 		const rawData = this.html.inputData.value;
@@ -70,6 +75,7 @@ class PricingDataFormatter {
 		const isQTY = this.html.showQTY.checked;
 		const isPrice = this.html.showPrice.checked;
 		const isPlaceholder = this.html.showPlaceholder.checked;
+		const isTable = this.html.showTable.checked;
 		const { data: result, error } = this.format( rawData, isQTY, isSKU, isPrice );
 		const errorOutput = this.html.errorOutput;
 		const outputData = this.html.outputData;
@@ -77,6 +83,12 @@ class PricingDataFormatter {
 		const body = this.html.tableBody;
 		header.innerHTML = '';
 		body.innerHTML = '';
+		if( !isTable ){
+			this.html.resultTable.style.display = 'none';
+		}
+		else {
+			this.html.resultTable.style.display = 'table';
+		}
 		errorOutput.textContent = '';
 		outputData.value = '';
 		if( error ){
